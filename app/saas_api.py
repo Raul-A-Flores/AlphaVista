@@ -1,10 +1,13 @@
 from fastapi import FastAPI,HTTPException
 from saas import generate_branding_snippit, generate_keywords
+from mangum import Mangum
 
 
 app = FastAPI()
+handler = Mangum(app)
 MAX_INPUT_LENGTH = 32
 
+# Generating Snippit
 
 @app.get("/generate_snippit")
 async def generating_branding_api(prompt: str):
@@ -12,6 +15,8 @@ async def generating_branding_api(prompt: str):
     snippit = generate_branding_snippit(prompt)
     return {"Snippit": snippit, "Keywords": []}
 
+
+# Generating Keywords
 @app.get("/generate_keyword")
 async def generating_keyword_api(prompt: str):
     validate_input_length(prompt)

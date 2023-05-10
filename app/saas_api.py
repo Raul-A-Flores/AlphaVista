@@ -1,11 +1,21 @@
 from fastapi import FastAPI,HTTPException
 from saas import generate_branding_snippit, generate_keywords
 from mangum import Mangum
+from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI()
 handler = Mangum(app)
 MAX_INPUT_LENGTH = 32
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Generating Snippit
 
